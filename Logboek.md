@@ -27,3 +27,25 @@ aan de oefening van week 3 : 1 uur.
 * Zondag
 	* Ik heb verder gewerkt aan de plugins en heb ze aan de praat gekregen : 1 uur
 # Totale duur : 2 uur
+
+## Week 4 - 2 uur uur
+* Maandag
+	* Werken tijdens de les : 1 uur
+* Dinsdag : 1 uur
+	* Ik heb verschillende videos beken omtrent php om dit beter te begrijpen. : 
+		https://www.youtube.com/watch?v=ZdP0KM49IVk&t
+		https://www.youtube.com/watch?v=7YcW25PHnAA
+		
+		
+# Totale duur : 2 uur
+
+## Week 5 - 8 uur uur
+* Maandag
+	* Video bekijken om het SLIM framework beter te begrijpen : 1 uur
+		* https://www.youtube.com/watch?v=DHUxnUX7Y2Y&t
+*Dinsdag
+	*PHP bestand maken met SLIM framework : 4 uur
+	*Een framework 7 website maken die gebruik maakt van het php bestand: 3 uur
+				
+# Totale duur : 8 uur
+

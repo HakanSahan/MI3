@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		"use strict"
+		var apiAddress = "http://localhost/game/MakeRoom.php?"
+		function makeRoom() {
+			$.ajax({
+                type: "POST",
+                url: apiAddress + "m=makeRoom",
+                crossDomain: true,
+                data: '',
+                withCredentials: false,
+                success: function(responseData, textStatus, jqXHR) {
+                    var list = responseData.data;
+                    //JSON.parse(responseData);
+                    console.log("resultlist :" + list);
+
+                    if (Object.keys(list).length > 0) {
+                        // list bevat minstens 1 property met wa
+                        // alles wat via json komt, is standaard een string of een object.
+                        // hier is het omzetten naar een int wel niet nodig, omdat we er niet met gaan rekenen
+                        console.log("Room no. " + list + list.data);
+
+                    } else {
+                        console.log("Could not create room");
+                    }
+
+                },
+                error: function(responseData, textStatus, errorThrown) {
+                    console.log("Could not create room " + errorThrown);
+                    //alerter("Could not create room : " + errorThrown);
+                }
+            });
+		}
+		
+	</script>
+</head>
+
+<body>
+	<button onclick="makeRoom()">Make Room</button>
+</body>
+
+</html>

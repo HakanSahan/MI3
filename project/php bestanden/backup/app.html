@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .knop {
+            border: solid 1px black;
+            width: 10em;
+            display: inline-block;
+            margin: 0.25em;
+            padding: 0.2em;
+        }
+
+        .rij {
+            border: 1px solid grey;
+            margin: 0.1em;
+            display: inline-block;
+        }
+
+        .rij span {
+            float: left;
+            display: inline-block;
+            width: 10em;
+            overflow: word-wrap;
+            padding: 0.1em;
+
+        }
+
+        .kOdd {
+            background-color: lightgray;
+        }
+
+        label {
+            display: inline-block;
+            width: 10em;
+        }
+
+    </style>
+    <script type="text/javascript">
+        "use strict";
+        /*jslint browser: true*/
+        /*jslint devel: true*/
+        /*global $ */
+        var apiAddress = "http://localhost/mi3/api.php?";
+
+        function getApiGebruiker() {
+            // een ONVEILIGE manier om gebruikersgegevens te testen
+            var data = {};
+            data.name = $("#login").val();
+            data.password = $("#pwd").val();
+            data.format = "json";
+
+
+            // test de api
+            $.ajax({
+                type: "POST",
+                url: apiAddress + "m=login",
+                crossDomain: true,
+                data: data,
+                withCredentials: false,
+                success: function(responseData, textStatus, jqXHR) {
+                    var list = responseData.data;
+                    //JSON.parse(responseData);
+                    console.log("resultlist :" + list + " length:" + list.length);
+
+                    if (Object.keys(list).length > 0) {
+                        // list bevat minstens 1 property met waarde
+
+                        list.ID = parseInt(list.ID);
+                        // alles wat via json komt, is standaard een string of een object.
+                        // hier is het omzetten naar een int wel niet nodig, omdat we er niet met gaan rekenen
+                        console.log("Gebruikersgevens ok : ID = " + list.ID);
+                        alerter("Gebruikersgevens ok : ID = " + list.ID);
+
+                    } else {
+                        console.log("Login failed : 0 results");
+                        alerter("Login failed : this login/password combination does not exist");
+                    }
+
+                },
+                error: function(responseData, textStatus, errorThrown) {
+                    console.log("Could not login " + errorThrown);
+                    alerter("Login failed : " + errorThrown);
+                }
+            });
+
+
+        }
+		
+		function addApiProduct() {
+			var data = {}
+			data.name = $("#name").val();
+			data.price = $("#price").val();
+			data.format = "json";
+			
+			$.ajax ({
+				type: "post",
+				url: apiAddress + "m=padd",
+				crossDomain: true,
+				data: data,
+				withCredentials: false,
+				succes: getApiProducten(),
+				error: function(responseData, textStatus, errorThrown) {
+                    console.log("Could not add product " + errorThrown);
+                    alerter("Product add failed : " + errorThrown);
+                }		
+			});
+		}
+
+        function getApiProducten() {
+            // de producten van de server opvragen en weergeven dmv de alerter functie
+            var data = {};
+            //data.user = "test"; // als je de authentication in de api op true zet, heb je dit hier wel nodig 
+            //data.password = "test"; // als je de authentication in de api op true zet, heb je dit hier wel nodig
+            data.format = "json";
+
+
+            // test de api
+            $.ajax({
+                type: "POST",
+                url: apiAddress + "m=getProducten",
+                crossDomain: true,
+                data: data,
+                withCredentials: false,
+                success: function(responseData, textStatus, jqXHR) {
+                    var list = responseData.data;
+                    console.log("resultlist :" + list + " length:" + list.length);
+
+                    if (list.length > 0) {
+                        // er zit minstens 1 item in list, we geven dit ook onmiddelijk weer
+                        var tLijst = "<span class='rij kOdd'><span>ID</span><span>Omschrijving</span><span>Prijs</span></span><br>";
+                        for (var i = 0; i < list.length; i++) {
+                            tLijst += "<span class='rij'><span>" + list[i].pr_id + "</span><span class='kOdd'>" + list[i].pr_naam + "</span><span>" + list[i].pr_prijs + "</span></span><br>";
+                        }
+                        console.log("Servertijd :  " + list.servertime);
+                        alerter(tLijst);
+
+
+                    } else {
+                        console.log("Servertime retrieval failed");
+                        alerter("Servertijd kon niet opgevraagd worden");
+                    }
+
+                },
+                error: function(responseData, textStatus, errorThrown) {
+                    console.log("API Failure " + errorThrown);
+                    alerter("<br>API Fout. Probeer later nog eens.<br>(" + errorThrown + ")");
+                }
+            });
+        }
+
+        function getApiTijd() {
+            // de tijd van de server opvragen en weergeven dmv de alerter functie
+            var data = {};
+            //data.user = "test"; // als je de authentication in de api op true zet, heb je dit hier wel nodig 
+            //data.password = "test"; // als je de authentication in de api op true zet, heb je dit hier wel nodig
+            data.format = "json";
+
+
+            // test de api
+            $.ajax({
+                type: "POST",
+                url: apiAddress + "m=getTime",
+                crossDomain: true,
+                data: data,
+                withCredentials: false,
+                success: function(responseData, textStatus, jqXHR) {
+                    var list = responseData.data;
+                    console.log("resultlist :" + list + " length:" + list.length);
+
+                    if (Object.keys(list).length > 0) {
+                        // er zit slechts 1 item in de lijst, we geven dit ook onmiddelijk weer
+                        console.log("Servertijd :  " + list.servertime);
+                        alerter("Servertijd : " + list.servertime);
+
+
+                    } else {
+                        console.log("Servertime retrieval failed");
+                        alerter("Servertijd kon niet opgevraagd worden");
+                    }
+
+                },
+                error: function(responseData, textStatus, errorThrown) {
+                    console.log("API Failure " + errorThrown);
+                    alerter("<br>API Fout. Probeer later nog eens.<br>(" + errorThrown + ")");
+                }
+            });
+        }
+
+
+        function alerter(message) {
+            $("#alert").html(message);
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <div id="alert" style="color:red">
+
+    </div><br>
+    <form>
+        <label for="login">Login:</label><input type="text" id="login"><br>
+        <label for="pwd">Paswoord:</label><input type="password" id="pwd">
+    </form>
+    <span class="knop" onclick="getApiGebruiker();">Test login</span>
+    <span class="knop" onclick="getApiTijd();">Test servertijd</span>
+    <span class="knop" onclick="getApiProducten();">Test producten</span>
+	<form>
+		<label for="name">Name:</label><input type="text" id="name"><br>
+		<label for="price">Price:</label><input type="number" id="price">
+	</form>
+	<span class="knop" onclick="addApiProduct()">Voeg product toe</span>
+
+</body>
+
+</html>

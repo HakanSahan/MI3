@@ -307,7 +307,7 @@ if (strcasecmp($_GET['m'],'padd') == 0) {
         $response['data'] = mysqli_connect_error();
 	}
 	else {
-		 $response['code'] = 0;
+		$response['code'] = 0;
         $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
 		$lQuery = "insert into producten values((select max(pr_id) + 1 from (select * from producten) as t1),'" . $_POST['name'] . "'," . $_POST['price'] . ",0)";
 		$result = $conn -> query($lQuery);
