@@ -49,3 +49,13 @@ aan de oefening van week 3 : 1 uur.
 				
 # Totale duur : 8 uur
 
+## Week 6 - 3 uur uur
+* Maandag
+	* Werken tijdens de les : 2 uur
+*Zondag
+	* video's bekijken over websockets voor project: 1 uur
+		* https://www.youtube.com/watch?v=FmaBZcQzL-Y
+		* https://www.youtube.com/watch?v=OHy2zpmsWf8 
+				
+# Totale duur : 3 uur
+
